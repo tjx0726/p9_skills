@@ -1,6 +1,6 @@
 # P9 Skills
 
-This is the P9 team's internal repository for Agent Skills. Each shared skill has its own folder at the repository root. Its `SKILL.md` is the entry point and the same folder contains any supporting files.
+This is the P9 team's internal repository for Agent Skills. Each shared skill has its own folder at the repository root, with a name that starts with `p9-`. Its `SKILL.md` is the entry point and the same folder contains its supporting files.
 
 ## Get one skill
 
@@ -22,7 +22,9 @@ Choose a location for your local agent host. Project paths are relative to the p
 | Codex | `~/.agents/skills/` | `.agents/skills/` | [Codex skills](https://learn.chatgpt.com/docs/build-skills) |
 | Claude Code | `~/.claude/skills/` | `.claude/skills/` | [Claude Code skills](https://code.claude.com/docs/en/skills) |
 
-Check the host's skill list and try an example request from `SKILL.md`. If the skill does not appear, check the path and follow the host's instructions to reload or restart. For other agents, check the host's own installation and invocation instructions and the skill's tested requirements.
+If the catalog lists another skill as required, install that skill's folder in the same host as well. Check the host's skill list and try an example request from `SKILL.md`. If the skill does not appear, check the path and follow the host's instructions to reload or restart. For other agents, check the host's own installation and invocation instructions and the skill's tested requirements.
+
+Skills use access the team has already set up where available. If something is missing, the agent explains what it needs and how to connect an account or ask your P9 contact for help. Keep passwords and access keys out of chat.
 
 ## Update a skill
 
@@ -30,7 +32,7 @@ Update the source checkout with `git pull --ff-only` and review the change notes
 
 ## Skill Catalog
 
-Each entry links directly to the `SKILL.md` of a distributable folder at the repository root.
+Each entry links directly to the `SKILL.md` of a distributable folder at the repository root and identifies any dependencies.
 
 | Skill Name | Purpose | Path | Supported Tasks | Dependencies | Maintenance Owner |
 | --- | --- | --- | --- | --- | --- |

@@ -1,0 +1,55 @@
+# Temporary files, caches and logs at any depth
+tmp/
+.tmp/
+temp/
+.temp/
+.cache/
+logs/
+*.tmp
+*.temp
+*.log
+*.log.*
+
+# Local agent runtime state
+/.agents/cache/
+/.agents/runtime/
+/.agents/runs/
+/.agents/sessions/
+/.agents/worktrees/
+
+# Local settings and credentials
+.env
+.env.*
+env.txt
+!.env.example
+!.env.sample
+!.env.template
+
+# Operating system and editor files
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Dependencies and caches from skill scripts
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build and test output
+/build/
+/dist/
+/coverage/
+.coverage
+.coverage.*
+htmlcov/
