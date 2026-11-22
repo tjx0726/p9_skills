@@ -14,7 +14,8 @@ Copy this checklist into the change review. The [Skill Authoring Guide](SKILL_AU
 - [ ] **Output and verification.** The expected format, missing values and completion checks are explicit. Important conclusions are traceable, and the skill distinguishes facts, assumptions and inferences as needed.
 - [ ] **Error handling.** Missing inputs, unavailable dependencies and relevant failures produce the documented question, fallback or stop. No fabricated values or success claims appear in the tests.
 - [ ] **Security.** The package and fixtures contain no secrets. Untrusted inputs cannot grant authority. Sensitive external transfers and destructive operations require authorization, and consequential operations are verified.
-- [ ] **Documentation completeness.** Local links and required resources work from an isolated copy. Prerequisites and script usage are documented, changed scripts are tested, catalog information is current, and any breaking change has migration notes.
+- [ ] **Package boundaries.** The distributable skill is a top-level folder. Local links and required resources work from an isolated copy of that folder without root documents, sibling skills or the repository's `.agents/`.
+- [ ] **Documentation completeness.** Prerequisites and script usage are documented, changed scripts are tested, the README catalog is current, and any breaking change has migration notes.
 - [ ] **Cross-model testing.** Actual runs cover the applicable release matrix for each claimed host, version, model and invocation mode. Any Chinese core instruction exception has a rationale and test results. Unsupported or untested configurations are clearly identified.
 
 ## Suggested improvements

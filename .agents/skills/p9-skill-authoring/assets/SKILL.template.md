@@ -5,7 +5,7 @@ description: >-
   {{English trigger phrase}}, including requests about {{中文任务关键词}}.
 ---
 
-<!-- Copy this file to skills/<skill-name>/SKILL.md. Replace the starter name with the folder name, resolve all {{placeholders}}, and remove this comment. Keep only the sections your skill needs. -->
+<!-- Copy this file to <skill-name>/SKILL.md at the repository root. Replace the starter name with the folder name, resolve all {{placeholders}}, and remove this comment. Keep only the sections your skill needs and bundle all required local resources in its folder. -->
 
 # {{Skill title}}
 

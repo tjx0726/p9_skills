@@ -1,21 +1,21 @@
 # P9 Skills
 
-This is the P9 team's internal repository for developing, sharing and maintaining reusable Agent Skills. Each skill is distributed as a single folder with its instructions and any supporting files.
+This is the P9 team's internal repository for Agent Skills. Each shared skill has its own folder at the repository root. Its `SKILL.md` is the entry point and the same folder contains any supporting files.
 
 ## Get one skill
 
-1. Open the [Skill Catalog](docs/SKILL_CATALOG.md). Check the tasks and dependencies for the skill you want.
-2. Copy the complete `skills/<skill-name>/` folder from an existing checkout. If you need a fresh checkout, Git sparse checkout can retrieve the selected skill folder and the repository's root files. Set `skill_name` to the exact folder name from the catalog and use an account with repository access.
+1. Find the skill in the [Skill Catalog](#skill-catalog). Check the tasks and dependencies for the skill you want.
+2. Copy the complete `<skill-name>/` folder from the root of an existing checkout. If you need a fresh checkout, use Git sparse checkout to retrieve that folder and the top-level files. Set `skill_name` to the exact folder name from the catalog and use an account with repository access.
 
    ```sh
    skill_name='REPLACE_WITH_CATALOG_NAME'
    git clone --filter=blob:none --sparse https://github.com/tjx0726/p9_skills.git p9-skills-source
-   git -C p9-skills-source sparse-checkout set "skills/$skill_name"
+   git -C p9-skills-source sparse-checkout set "$skill_name"
    ```
 
 ## Install the skill
 
-Choose a location for your local agent host. For a project installation, use the root of the project where you will run the skill. Copy the selected folder directly into the chosen location so that `SKILL.md` is at `<location>/<skill-name>/SKILL.md`.
+Choose a location for your local agent host. Project paths are relative to the project where you will run the skill. Copy only the complete selected skill folder into the chosen location so that `SKILL.md` is at `<location>/<skill-name>/SKILL.md`. Agents using the skill start with that file and follow its bundled references as needed.
 
 | Local agent host | Personal location | Project location relative to the project root | Official instructions |
 | --- | --- | --- | --- |
@@ -28,6 +28,13 @@ Check the host's skill list and try an example request from `SKILL.md`. If the s
 
 Update the source checkout with `git pull --ff-only` and review the change notes for dependency or behaviour changes. Save any local edits you need, then replace the installed folder with the complete updated folder so removed files are cleared. Confirm that the host loads the updated skill and run an example request again. Record the Git revision if you need to reproduce the installation.
 
-## Contribute a skill
+## Skill Catalog
 
-Read the [repository instructions](AGENTS.md) and the [Skill Authoring Guide](docs/SKILL_AUTHORING_GUIDE.md). Start from the [skill template](templates/skill/SKILL.md), add or update the catalog entry, and include the results from the [Skill Review Checklist](docs/SKILL_REVIEW_CHECKLIST.md) with your proposed change.
+Each entry links directly to the `SKILL.md` of a distributable folder at the repository root.
+
+| Skill Name | Purpose | Path | Supported Tasks | Dependencies | Maintenance Owner |
+| --- | --- | --- | --- | --- | --- |
+
+## Develop skills in this repository
+
+Read [AGENTS.md](AGENTS.md) and use the [P9 Skill Authoring skill](.agents/skills/p9-skill-authoring/SKILL.md) for creating, updating or reviewing skills here. The authoring skill bundles the [development guide](.agents/skills/p9-skill-authoring/references/SKILL_AUTHORING_GUIDE.md), [review checklist](.agents/skills/p9-skill-authoring/references/SKILL_REVIEW_CHECKLIST.md) and [starter template](.agents/skills/p9-skill-authoring/assets/SKILL.template.md). Keep each new distributable skill in its own root directory and update the catalog as part of the change.

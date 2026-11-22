@@ -4,10 +4,10 @@ P9 Skills stores reusable Agent Skills for the P9 team. A skill should be easy t
 
 ## Package layout
 
-Store each skill at `skills/<skill-name>/`. The folder name is the skill's stable identifier and matches `name` in `SKILL.md`. The layout below shows the required entry point and optional resource folders.
+Store each distributable skill in a separate `<skill-name>/` directory directly under the repository root. The folder name is the skill's stable identifier and matches `name` in `SKILL.md`. The layout below shows the required entry point and optional resource folders.
 
 ```text
-skills/<skill-name>/
+<skill-name>/
 ├── SKILL.md
 ├── references/
 ├── scripts/
@@ -21,7 +21,9 @@ skills/<skill-name>/
 | `scripts/` | Reusable executable helpers when code makes a repeated operation more reliable. Document how to run and test each helper, its dependencies, and its expected inputs, outputs and failure behaviour. |
 | `assets/` | Templates, images or other files used to produce the deliverable. |
 
-Create optional folders only when you have files that serve the skill. Link from `SKILL.md` or the relevant reference using paths relative to the referring file, and say when to open or run each resource. Keep required local files inside the skill folder. Verify that paths still work from an isolated copy. Avoid deep chains of references and dependencies on the source repository, another skill or a maintainer's local files.
+Create optional folders only when you have files that serve the skill. Link from `SKILL.md` or the relevant reference using paths relative to the referring file, and say when to open or run each resource. Keep required local files inside the skill folder and verify that paths still work from an isolated copy. The skill's execution must be independent of the source repository's `.agents/`, root documents and sibling skill folders.
+
+For repository development, start at the root `AGENTS.md` and use the authoring skill under `.agents/`. Keep authoring resources inside that maintenance package so contributors can find them together.
 
 ## Metadata and discovery
 
@@ -61,6 +63,8 @@ Use **English-first, Bilingual Discovery**. The language used to write a skill i
 
 Maintain one authoritative workflow. Use a short bilingual terminology mapping when it helps with a source or domain term. A skill centred on Chinese legal, financial or administrative work may use Chinese core instructions when needed. Record the rationale in the review, keep bilingual discovery, and verify the exception with the test matrix below. Limit claims about language performance to the tested tasks and models.
 
+### Runtime language policy
+
 Every skill for multilingual users must include these rules or point to equivalent instructions bundled with the skill.
 
 - Accept user requests in English or Chinese.
@@ -98,9 +102,9 @@ Vague instruction examples include `Analyse the document thoroughly` and `Check 
 
 ## Create or update a skill
 
-1. Define the intended task, its boundaries and the host and model combinations you plan to support. Check the [Skill Catalog](SKILL_CATALOG.md) before adding an overlapping skill.
-2. For a new skill, copy the [skill template](../templates/skill/SKILL.md) into `skills/<skill-name>/SKILL.md`. Replace the starter `name` with the folder name, fill or remove all placeholders, and remove the author comment. Combine or omit sections where the task does not need them, while retaining the information needed to run and verify the workflow.
-3. For updates, preserve existing invocation names, supported inputs, output contracts and environments where possible. Describe any breaking change, what it affects and how to migrate. Update the catalog when entries or their information change.
+1. Define the intended task, its boundaries and the host and model combinations you plan to support. Check the [Skill Catalog](../../../../README.md#skill-catalog) before adding an overlapping skill.
+2. For a new skill, copy the [skill template](../assets/SKILL.template.md) into `<skill-name>/SKILL.md` at the repository root. Replace the starter `name` with the folder name, fill or remove all placeholders, and remove the author comment. Combine or omit sections where the task does not need them, while retaining the information needed to run and verify the workflow.
+3. For updates, preserve existing invocation names, supported inputs, output contracts and environments where possible. Describe any breaking change, what it affects and how to migrate. Update the README catalog when entries or their information change. Use the exact name from frontmatter and a direct relative path such as `./<skill-name>/SKILL.md`. Use `None` if there are no additional dependencies and `Unassigned` if there is no confirmed owner.
 4. Check the package from an isolated copy and test any new or changed scripts. Run the applicable test matrix and attach results to the review. Complete the [Skill Review Checklist](SKILL_REVIEW_CHECKLIST.md) before release.
 
 ## Release test matrix
