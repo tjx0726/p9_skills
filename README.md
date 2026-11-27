@@ -36,6 +36,7 @@ Each entry links directly to the `SKILL.md` of a distributable folder at the rep
 
 | Skill Name | Purpose | Path | Supported Tasks | Dependencies | Maintenance Owner |
 | --- | --- | --- | --- | --- | --- |
+| p9-incoming-delivery-processing | Reconcile physical deliveries by supplier and maintain receipt/barcode records. | [SKILL.md](./p9-incoming-delivery-processing/SKILL.md) | Reconcile email/Drive originals and product levels; validate/convert ISBN-10/13 aliases; draft or record deliveries; amend original barcode records without new receipt (收货、到货登记、条码补录、ISBN换算). | Authorized Gmail, Google Drive or supplied originals; Slack send/edit as needed; native Google Sheets; image/PDF readers; Python 3 standard library for bundled ISBN helper or documented deterministic fallback. Optional host Google Drive, Google Sheets, PDF and Tabbit skills; browser visual check when available. See package for requirements and fallbacks. | Unassigned |
 
 ## Develop skills in this repository
 
