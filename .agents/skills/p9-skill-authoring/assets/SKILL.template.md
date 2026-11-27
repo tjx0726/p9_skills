@@ -1,7 +1,7 @@
 ---
 name: p9-skill-name
 description: >-
-  {{Describe the task and its result in English}}. Use when the user asks to
+  {{Describe the task/result in English and, for a foundational skill, its reusable role for other skills}}. Use when the user asks to
   {{English trigger phrase}}, including requests about {{中文任务关键词}}.
 ---
 
@@ -27,7 +27,7 @@ description: >-
 - **Required input.** {{File, fields or other information and how to recognise valid input.}}
 - **Optional input.** {{Input and the default when absent.}}
 - **Prerequisites.** {{Required tools, versions, access or runtime conditions.}}
-- **Skill dependencies, if any.** {{Name, required or optional, when to use it, how to load it on this host, expected input and result, and fallback.}}
+- **Skill dependencies, if any.** {{Existing foundational skill names, required or optional, when to use/load them on this host, passed context, expected result and missing-dependency fallback.}}
 - **Settings or account connections, if any.** {{Exact names, purpose, required or optional, supported runtime sources and any permitted local fallback path.}}
 
 ## Workflow
