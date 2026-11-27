@@ -1,0 +1,556 @@
+{
+  "simulation": "OFFLINE ONLY; synthetic data, no live backend",
+  "stores": [
+    "London",
+    "Bow",
+    "CW"
+  ],
+  "storeIds": {
+    "London": "101",
+    "Bow": "102",
+    "CW": "103"
+  },
+  "aliases": {
+    "RR": "Bow"
+  },
+  "predecessor": {
+    "reconciliation": "complete",
+    "slack": "already verified",
+    "sheet": "already verified",
+    "currencyDefault": "GBP"
+  },
+  "cases": [
+    {
+      "id": "R1",
+      "request": "Standalone purchase and receive in CW. These SKU mappings are approved; do not run product intake or republish delivery logs.",
+      "facts": {
+        "target": "CW",
+        "supplier": "Synthetic supplier",
+        "stage": "purchaseAndReceive",
+        "line": "box",
+        "skus": {
+          "London": {
+            "id": "10105",
+            "uid": "9100000000000010105"
+          },
+          "Bow": {
+            "id": "10205",
+            "uid": "9100000000000010205"
+          },
+          "CW": {
+            "id": "10305",
+            "uid": "9100000000000010305"
+          }
+        },
+        "unit": "box",
+        "stockFactor": 1,
+        "physicalPackFactor": 36,
+        "packReference": {
+          "London": {
+            "id": "10106",
+            "uid": "9100000000000010106"
+          },
+          "Bow": {
+            "id": "10206",
+            "uid": "9100000000000010206"
+          },
+          "CW": {
+            "id": "10306",
+            "uid": "9100000000000010306"
+          }
+        },
+        "paid": 2,
+        "gift": 1,
+        "netUnitCost": "10.00",
+        "giftCost": "0.00",
+        "giftEvidence": "User-approved free gift, quantity one",
+        "netEvidence": "Complete ordering mail states ex-VAT 10 per box; VAT 20% evidenced",
+        "orderDiscount": "2.00 recorded separately; selected basis does not allocate it",
+        "existingOrders": [],
+        "baselineBoxStock": {
+          "London": 5,
+          "Bow": 5,
+          "CW": 5
+        }
+      },
+      "expected": {
+        "purchases": 1,
+        "receipts": 1,
+        "target": "CW",
+        "paid": 2,
+        "gift": 1,
+        "stockDelta": 3,
+        "netAmount": "20"
+      }
+    },
+    {
+      "id": "R2",
+      "request": "按用户确认的分摊在CW采购并入库。两套kit净额200，分给20个B&B小盒，每个10；另赠2个booster box成本0。",
+      "facts": {
+        "target": "CW",
+        "supplier": "Synthetic supplier",
+        "stage": "purchaseAndReceive",
+        "costOwner": "two outer kits",
+        "currency": "GBP",
+        "lines": [
+          {
+            "line": "bb",
+            "skus": {
+              "London": {
+                "id": "10107",
+                "uid": "9100000000000010107"
+              },
+              "Bow": {
+                "id": "10207",
+                "uid": "9100000000000010207"
+              },
+              "CW": {
+                "id": "10307",
+                "uid": "9100000000000010307"
+              }
+            },
+            "unit": "small box",
+            "paid": 20,
+            "gift": 0,
+            "netUnitCost": "10.00"
+          },
+          {
+            "line": "giftbox",
+            "skus": {
+              "London": {
+                "id": "10105",
+                "uid": "9100000000000010105"
+              },
+              "Bow": {
+                "id": "10205",
+                "uid": "9100000000000010205"
+              },
+              "CW": {
+                "id": "10305",
+                "uid": "9100000000000010305"
+              }
+            },
+            "unit": "booster box",
+            "paid": 0,
+            "gift": 2,
+            "netUnitCost": "0.00",
+            "giftEvidence": "explicit allocation"
+          }
+        ],
+        "outerKits": {
+          "count": 2,
+          "representation": "cost owner, not additional receipt"
+        },
+        "packReference": {
+          "London": {
+            "id": "10106",
+            "uid": "9100000000000010106"
+          },
+          "Bow": {
+            "id": "10206",
+            "uid": "9100000000000010206"
+          },
+          "CW": {
+            "id": "10306",
+            "uid": "9100000000000010306"
+          }
+        },
+        "allocation": "explicit user-approved",
+        "existingOrders": []
+      },
+      "expected": {
+        "purchases": 1,
+        "receipts": 1,
+        "target": "CW",
+        "paid": 20,
+        "gift": 2,
+        "netAmount": "200",
+        "outerKitStock": 0
+      }
+    },
+    {
+      "id": "R3",
+      "request": "CW和RR都完成入库，已有单据先核实；上次守卫在CW采购创建后停止，没有发收货。",
+      "facts": {
+        "targets": [
+          "CW",
+          "RR"
+        ],
+        "supplier": "Synthetic supplier",
+        "stage": "purchaseAndReceive",
+        "line": "box",
+        "skus": {
+          "London": {
+            "id": "10105",
+            "uid": "9100000000000010105"
+          },
+          "Bow": {
+            "id": "10205",
+            "uid": "9100000000000010205"
+          },
+          "CW": {
+            "id": "10305",
+            "uid": "9100000000000010305"
+          }
+        },
+        "unit": "box",
+        "records": [
+          {
+            "store": "Bow",
+            "purchaseId": "700301",
+            "receiptId": "800301",
+            "state": "received",
+            "paid": 2,
+            "gift": 1,
+            "ledgerAndStockAgree": true
+          },
+          {
+            "store": "CW",
+            "purchaseId": "700302",
+            "state": "awaitingReceipt",
+            "paid": 1,
+            "gift": 2,
+            "receivedPaid": 0,
+            "receivedGift": 0,
+            "htmlPendingTotal": 3,
+            "netUnitCost": "5.00",
+            "guardStoppedAfterPurchase": true,
+            "receiptRequestSent": false
+          }
+        ],
+        "ledgerContract": "paid updateStock; gift stockFlowItemExt.giftBaseUnitQuantity, both in stock units"
+      },
+      "expected": {
+        "purchases": 0,
+        "receipts": 1,
+        "target": "CW",
+        "purchaseId": "700302",
+        "paid": 1,
+        "gift": 2,
+        "bowWrites": 0
+      }
+    },
+    {
+      "id": "R4",
+      "request": "The last receipt timed out and there is no final local file. Finish this CW delivery if anything is missing.",
+      "facts": {
+        "target": "CW",
+        "supplier": "Synthetic supplier",
+        "line": "box",
+        "skus": {
+          "London": {
+            "id": "10105",
+            "uid": "9100000000000010105"
+          },
+          "Bow": {
+            "id": "10205",
+            "uid": "9100000000000010205"
+          },
+          "CW": {
+            "id": "10305",
+            "uid": "9100000000000010305"
+          }
+        },
+        "unit": "box",
+        "priorOutcome": "unknown to local checkpoint",
+        "freshBackend": {
+          "purchaseId": "700401",
+          "receiptId": "800401",
+          "state": "received",
+          "paid": 2,
+          "gift": 1,
+          "remaining": 0,
+          "ledgerAndStockAgree": true
+        },
+        "businessReferenceMatch": true
+      },
+      "expected": {
+        "writes": 0,
+        "status": "received"
+      }
+    },
+    {
+      "id": "R5",
+      "request": "CW采购提交结果不明，现在继续处理；只做能独立证明安全的步骤。",
+      "facts": {
+        "target": "CW",
+        "supplier": "Synthetic supplier",
+        "line": "box",
+        "skus": {
+          "London": {
+            "id": "10105",
+            "uid": "9100000000000010105"
+          },
+          "Bow": {
+            "id": "10205",
+            "uid": "9100000000000010205"
+          },
+          "CW": {
+            "id": "10305",
+            "uid": "9100000000000010305"
+          }
+        },
+        "previousCreate": "timeout, outcome unknown",
+        "currentReadback": "incomplete/unavailable; no definitive match or proof of absence",
+        "localCheckpoint": null
+      },
+      "expected": {
+        "writes": 0,
+        "status": "uncertain"
+      }
+    },
+    {
+      "id": "R6",
+      "request": "Create only a purchase for RR from these mapped products. Nothing has arrived. The source explicitly says EUR 9 per unit; there is no external reference and the form does not require it.",
+      "facts": {
+        "target": "RR",
+        "supplier": "Synthetic supplier",
+        "stage": "createPurchase",
+        "line": "ordered",
+        "skus": {
+          "London": {
+            "id": "10108",
+            "uid": "9100000000000010108"
+          },
+          "Bow": {
+            "id": "10208",
+            "uid": "9100000000000010208"
+          },
+          "CW": {
+            "id": "10308",
+            "uid": "9100000000000010308"
+          }
+        },
+        "ordered": 4,
+        "received": null,
+        "unit": "each",
+        "currency": "EUR",
+        "netUnitCost": "9.00",
+        "originalComplete": true,
+        "existingOrders": [],
+        "externalReference": null,
+        "formRequiresReference": false
+      },
+      "expected": {
+        "purchases": 1,
+        "receipts": 0,
+        "target": "Bow",
+        "currency": "EUR",
+        "netAmount": "36"
+      }
+    },
+    {
+      "id": "R7",
+      "request": "先准备本批采购计划，能确认的证据继续查；不要沿用上次门店，不确定的关键项再问我。",
+      "facts": {
+        "target": null,
+        "supplier": "Synthetic supplier",
+        "stage": "prepare",
+        "line": "unknown",
+        "mappedProducts": true,
+        "physicalPaid": 1,
+        "physicalGift": 1,
+        "sourcePrice": "180 per unspecified case, VAT basis unknown",
+        "giftAllocation": null,
+        "authorizedSourcesChecked": "complete supplied originals do not resolve case size, tax basis or gift allocation",
+        "historicalLastStore": "CW"
+      },
+      "expected": {
+        "writes": 0,
+        "targetNotInferred": true
+      }
+    },
+    {
+      "id": "RM",
+      "baseCase": "R1",
+      "request": "Use the same complete standalone mapped facts in a host missing the foundation.",
+      "dependencyAvailability": {
+        "p9-pospal-web": false,
+        "p9-incoming-delivery-processing": true
+      },
+      "expected": {
+        "backendWrites": 0,
+        "blockedDependency": "p9-pospal-web"
+      }
+    },
+    {
+      "id": "RU",
+      "request": "CW target and supplier are known; dispatch document/truncated Slack do not confirm actual arrival. Reconcile before any backend mutation.",
+      "facts": {
+        "target": "CW",
+        "actualScope": null,
+        "actualCount": null
+      },
+      "dependencyAvailability": {
+        "p9-pospal-web": true,
+        "p9-incoming-delivery-processing": false
+      },
+      "expected": {
+        "backendWrites": 0,
+        "blockedDependency": "p9-incoming-delivery-processing"
+      }
+    },
+    {
+      "id": "H1",
+      "request": "Receive the five new each in CW using this completed intake handoff. Cost evidence now confirms GBP 3.20 net per each, five paid and zero gift. Catalog prices remain as approved by intake; do not publish messages or update Sheets.",
+      "intakeOutput": {
+        "batch": "P3",
+        "supplier": "Synthetic supplier",
+        "businessDate": {
+          "value": null,
+          "precision": "unknown",
+          "timezone": "Europe/London",
+          "source": "No delivery date supplied; the test execution date is not substituted."
+        },
+        "catalogStores": [
+          "London",
+          "Bow",
+          "CW"
+        ],
+        "storeIds": {
+          "London": "101",
+          "Bow": "102",
+          "CW": "103"
+        },
+        "storeAliasNormalization": {
+          "RR": "Bow"
+        },
+        "fullActualRosterSource": "Supplied foundation snapshot; exactly London, Bow and CW for this simulation.",
+        "receivingStore": null,
+        "receivingStoreState": "unknown; no receipt authorized",
+        "operations": {
+          "predecessor": {
+            "reconciliation": "complete",
+            "slack": "already verified",
+            "sheet": "already verified",
+            "currencyDefault": "GBP"
+          },
+          "slack": "already verified; not resent",
+          "sheet": "already verified; not appended",
+          "procurement": "not started",
+          "receipt": "not started",
+          "stockMovement": 0
+        },
+        "currency": {
+          "value": "GBP",
+          "provenance": "user-business-default; supplied predecessor currencyDefault and upstream currency policy",
+          "documentCurrencyLabelVerified": false
+        },
+        "cost": {
+          "state": "unknown",
+          "value": null,
+          "buyPriceWritten": false,
+          "provenance": "No verified supplier net unit-cost evidence supplied."
+        },
+        "storeSkus": {
+          "London": {
+            "recordId": "10108",
+            "skuUid": "9200000000000010108",
+            "identifierSource": "offline mock allocation only",
+            "productCode": "TEST-SLEEVE-BLUE",
+            "mainCode": "TEST-NEW",
+            "unit": "each",
+            "stock": 0,
+            "sellPrice": "0.00",
+            "verification": "independent mock readback"
+          },
+          "Bow": {
+            "recordId": "10208",
+            "skuUid": "9200000000000010208",
+            "identifierSource": "offline mock allocation only",
+            "productCode": "TEST-SLEEVE-BLUE",
+            "mainCode": "TEST-NEW",
+            "unit": "each",
+            "stock": 0,
+            "sellPrice": "0.00",
+            "verification": "independent mock readback"
+          },
+          "CW": {
+            "recordId": "10308",
+            "skuUid": "9200000000000010308",
+            "identifierSource": "offline mock allocation only",
+            "productCode": "TEST-SLEEVE-BLUE",
+            "mainCode": "TEST-NEW",
+            "unit": "each",
+            "stock": 0,
+            "sellPrice": "0.00",
+            "verification": "independent mock readback"
+          }
+        },
+        "quantities": {
+          "actual": {
+            "quantity": 5,
+            "unit": "each",
+            "source": "supplied physicalReceived"
+          },
+          "paid": null,
+          "gift": null,
+          "ordered": null,
+          "state": "Actual physical quantity 5 each; paid/gift split and ordered quantity unknown."
+        },
+        "readiness": {
+          "catalog": "catalogVerified in mock only",
+          "skuMapping": "verified",
+          "purchaseReady": false,
+          "receivingReady": false,
+          "reason": "All-store SKU maps and each units are mock verified. Receiving store and paid/gift allocation remain unknown; no procurement authorized. Cost remains unknown, not 0."
+        },
+        "identity": {
+          "productCode": "TEST-SLEEVE-BLUE",
+          "scannedCode": "TEST-NEW",
+          "saleUnit": "each",
+          "identitySearch": "No matching identity, main/extra barcode, name/alias or product code in any actual store."
+        },
+        "units": {
+          "physical": "each",
+          "selling": "each",
+          "receiving": "each",
+          "stock": "each",
+          "receivingToStockFactor": 1,
+          "factorSource": "same physical and stock each unit; no packaging conversion"
+        },
+        "sellingPrice": {
+          "current": "0.00",
+          "authorizedSellingPrice": null,
+          "reason": "Ordinary new-product default when no selling price is authorized.",
+          "suggestion": "14.00",
+          "suggestionBasis": "each",
+          "suggestionProvenance": "Matched current UK retail suggestion 14.00, not approved",
+          "suggestionApplied": false,
+          "liveResearchPerformed": false
+        },
+        "tax": {
+          "value": "20%",
+          "provenance": "Existing appropriate category/brand/supplier; explicit evidence supports existing 20% tax config.",
+          "setting": "reuse evidenced existing tax configuration; no blanket tax default"
+        }
+      },
+      "additionalFacts": {
+        "target": "CW",
+        "supplier": "Synthetic supplier",
+        "stage": "purchaseAndReceive",
+        "paid": 5,
+        "gift": 0,
+        "unit": "each",
+        "stockFactor": 1,
+        "netUnitCost": "3.20",
+        "currency": "GBP",
+        "costEvidence": "Complete synthetic ordering original confirms ex-VAT per-each price.",
+        "existingOrders": [],
+        "stockBaseline": "new SKU stock zero in all catalog stores; no receipt yet"
+      },
+      "expected": {
+        "purchases": 1,
+        "receipts": 1,
+        "target": "CW",
+        "paid": 5,
+        "gift": 0,
+        "netAmount": "16.00",
+        "reuseInputSkuUid": true,
+        "otherStoreStockDelta": 0,
+        "priceChanges": 0
+      }
+    }
+  ],
+  "dependencySetup": "Install the named dependencies in the isolated host registry; never use source-checkout paths."
+}

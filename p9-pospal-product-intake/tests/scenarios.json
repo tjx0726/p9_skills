@@ -1,0 +1,312 @@
+{
+  "simulation": "OFFLINE ONLY; synthetic data, no live backend",
+  "stores": [
+    "London",
+    "Bow",
+    "CW"
+  ],
+  "storeIds": {
+    "London": "101",
+    "Bow": "102",
+    "CW": "103"
+  },
+  "aliases": {
+    "RR": "Bow"
+  },
+  "predecessor": {
+    "reconciliation": "complete",
+    "slack": "already verified",
+    "sheet": "already verified",
+    "currencyDefault": "GBP"
+  },
+  "cases": [
+    {
+      "id": "P1",
+      "request": "本批只更新商品资料。新扫描码和旧商品完全相同，请匹配后在所有实际门店处理，不采购、不改库存。",
+      "facts": {
+        "line": "alias",
+        "supplier": "Synthetic supplier",
+        "scannedCode": "000TESTALIAS",
+        "codeType": "internal test code",
+        "productCode": "TEST-EACH-01",
+        "evidence": "User and complete originals confirm same edition, language, physical product and each sale unit; only scanning code differs.",
+        "existing": {
+          "London": {
+            "id": "10101",
+            "uid": "9100000000000010101",
+            "main": "000TESTMAIN",
+            "aliases": [],
+            "unit": "each",
+            "sellPrice": "10.00",
+            "stock": 7,
+            "productCode": "TEST-EACH-01",
+            "history": "keep"
+          },
+          "Bow": {
+            "id": "10201",
+            "uid": "9100000000000010201",
+            "main": "000TESTMAIN",
+            "aliases": [],
+            "unit": "each",
+            "sellPrice": "10.00",
+            "stock": 7,
+            "productCode": "TEST-EACH-01",
+            "history": "keep"
+          },
+          "CW": {
+            "id": "10301",
+            "uid": "9100000000000010301",
+            "main": "000TESTMAIN",
+            "aliases": [],
+            "unit": "each",
+            "sellPrice": "10.00",
+            "stock": 7,
+            "productCode": "TEST-EACH-01",
+            "history": "keep"
+          }
+        }
+      },
+      "expected": {
+        "aliases": 3,
+        "specs": 0,
+        "products": 0,
+        "stockWrites": 0
+      }
+    },
+    {
+      "id": "P2",
+      "request": "This GW three-piece pack is a user-confirmed new 2026 version. Add its specification in all stores; the new single 2026 already exists. Report in English.",
+      "facts": {
+        "line": "spec",
+        "supplier": "GW",
+        "scannedCode": "TEST-2026-X3",
+        "productCode": "00000000001",
+        "specName": "2026 X3",
+        "msrp": "24.00",
+        "evidence": "User explicitly classifies the version; supplier original confirms 3 new singles per pack and MSRP.",
+        "oldPack": {
+          "London": {
+            "id": "10102",
+            "uid": "9100000000000010102",
+            "specName": "old X3",
+            "unit": "pack",
+            "childUidByStore": {
+              "London": "9100000000000010103",
+              "Bow": "9100000000000010203",
+              "CW": "9100000000000010303"
+            }
+          },
+          "Bow": {
+            "id": "10202",
+            "uid": "9100000000000010202",
+            "specName": "old X3",
+            "unit": "pack",
+            "childUidByStore": {
+              "London": "9100000000000010103",
+              "Bow": "9100000000000010203",
+              "CW": "9100000000000010303"
+            }
+          },
+          "CW": {
+            "id": "10302",
+            "uid": "9100000000000010302",
+            "specName": "old X3",
+            "unit": "pack",
+            "childUidByStore": {
+              "London": "9100000000000010103",
+              "Bow": "9100000000000010203",
+              "CW": "9100000000000010303"
+            }
+          }
+        },
+        "oldSingle": {
+          "London": {
+            "id": "10103",
+            "uid": "9100000000000010103",
+            "specName": "old"
+          },
+          "Bow": {
+            "id": "10203",
+            "uid": "9100000000000010203",
+            "specName": "old"
+          },
+          "CW": {
+            "id": "10303",
+            "uid": "9100000000000010303",
+            "specName": "old"
+          }
+        },
+        "newSingle": {
+          "London": {
+            "id": "10104",
+            "uid": "9100000000000010104",
+            "specName": "2026"
+          },
+          "Bow": {
+            "id": "10204",
+            "uid": "9100000000000010204",
+            "specName": "2026"
+          },
+          "CW": {
+            "id": "10304",
+            "uid": "9100000000000010304",
+            "specName": "2026"
+          }
+        },
+        "factor": 3
+      },
+      "expected": {
+        "specs": 3,
+        "links": 3,
+        "products": 0,
+        "stockWrites": 0
+      }
+    },
+    {
+      "id": "P3",
+      "request": "这批是全新普通商品，请所有门店建档，采购先不做。没有批准售价；用英文汇报。",
+      "facts": {
+        "line": "new",
+        "supplier": "Synthetic supplier",
+        "productCode": "TEST-SLEEVE-BLUE",
+        "scannedCode": "TEST-NEW",
+        "unit": "each",
+        "completeSearch": "No matching identity, main/extra barcode, name/alias or product code in any actual store.",
+        "metadata": "Existing appropriate category/brand/supplier; explicit evidence supports existing 20% tax config.",
+        "authorizedPrice": null,
+        "retailEvidence": "Matched current UK retail suggestion 14.00, not approved",
+        "physicalReceived": 5
+      },
+      "expected": {
+        "products": 3,
+        "openingStock": 0,
+        "sellPrice": "0",
+        "stockWrites": 0
+      }
+    },
+    {
+      "id": "P4",
+      "request": "Prepare the SKU handoff for only the two booster boxes actually received. The packing slip lists five; posters are notes only and line X must not be received. No procurement yet.",
+      "facts": {
+        "line": "boxes",
+        "observedStoreLabels": [
+          "London",
+          "Bow",
+          "RR",
+          "CW"
+        ],
+        "actual": {
+          "boxes": 2,
+          "unit": "box",
+          "source": "latest user receipt table"
+        },
+        "packingSlip": {
+          "boxes": 5,
+          "productCode": "TEST-BOX-01"
+        },
+        "physicalFactor": 36,
+        "box": {
+          "London": {
+            "id": "10105",
+            "uid": "9100000000000010105",
+            "unit": "box",
+            "stock": 5
+          },
+          "Bow": {
+            "id": "10205",
+            "uid": "9100000000000010205",
+            "unit": "box",
+            "stock": 5
+          },
+          "CW": {
+            "id": "10305",
+            "uid": "9100000000000010305",
+            "unit": "box",
+            "stock": 5
+          }
+        },
+        "pack": {
+          "London": {
+            "id": "10106",
+            "uid": "9100000000000010106",
+            "unit": "pack",
+            "stock": 20
+          },
+          "Bow": {
+            "id": "10206",
+            "uid": "9100000000000010206",
+            "unit": "pack",
+            "stock": 20
+          },
+          "CW": {
+            "id": "10306",
+            "uid": "9100000000000010306",
+            "unit": "pack",
+            "stock": 20
+          }
+        },
+        "relation": "existing box -> pack x36, separately stocked, verified",
+        "includedPackRepresentation": 72,
+        "poster": {
+          "quantity": 1,
+          "mode": "notes only"
+        },
+        "excluded": [
+          "X"
+        ]
+      },
+      "expected": {
+        "writes": 0,
+        "boxes": 2,
+        "packsReferenceOnly": 72,
+        "stores": 3
+      }
+    },
+    {
+      "id": "P5",
+      "request": "核对这个不同条码的商品，证据不清的地方先补查；不能猜新版或改掉别的SKU。",
+      "facts": {
+        "line": "ambiguous",
+        "scannedCode": "TEST-CONFLICT",
+        "language": "unconfirmed",
+        "version": "unconfirmed",
+        "existing": "Similar family name only; no exact edition/unit evidence. In CW the scanned code belongs to a different product.",
+        "userVersionDecision": null
+      },
+      "expected": {
+        "writes": 0,
+        "blocked": true
+      }
+    },
+    {
+      "id": "PM",
+      "baseCase": "P1",
+      "request": "Use the same complete approved facts in a host missing the required foundation.",
+      "dependencyAvailability": {
+        "p9-pospal-web": false,
+        "p9-incoming-delivery-processing": true
+      },
+      "expected": {
+        "backendWrites": 0,
+        "blockedDependency": "p9-pospal-web"
+      }
+    },
+    {
+      "id": "PU",
+      "request": "Only a photo code TEST-RAW and truncated Slack preview are supplied; reconcile actual arrivals before catalog writes.",
+      "facts": {
+        "actualScope": null,
+        "actualCount": null
+      },
+      "dependencyAvailability": {
+        "p9-pospal-web": true,
+        "p9-incoming-delivery-processing": false
+      },
+      "expected": {
+        "backendWrites": 0,
+        "blockedDependency": "p9-incoming-delivery-processing"
+      }
+    }
+  ],
+  "dependencySetup": "Install the named dependencies in the isolated host registry; never use source-checkout paths."
+}
